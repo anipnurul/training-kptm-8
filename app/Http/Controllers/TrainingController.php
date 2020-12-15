@@ -6,5 +6,18 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
+    public function index(){
+
+        $trainings = \App\Models\Training::all();
+       // dd($trainings);  //cara debug dump & die
+       return view('trainings.index', compact('trainings'));
+       //recources/views/trainings/index.blade.php
+
+    }
+    
+    public function create(){
+        return view('trainings.create');
+         //recources/views/trainings/create.blade.php
+    }
     //
 }

@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/trainings',[App\Http\Controllers\TrainingController::class, 'index']);
+Route::get('/users',[App\Http\Controllers\UserController::class, 'index'])->middleware('auth');
+Route::get('/trainings/create',[App\Http\Controllers\TrainingController::class, 'create']);
+Route::post('/training/create',[App\Http\Controllers\TrainingController::class, 'store']);
