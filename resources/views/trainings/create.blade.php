@@ -9,6 +9,7 @@
 
                 <div class="card-body">
                    <form method="POST" action="">
+                   @csrf
                      <div class="form-group">
                      <label>Title</label>
                      <input type="text" name="title" class="form-control">
@@ -25,7 +26,7 @@
                      </div>
 
                      <div class="form-group">
-                     <button type="button" class="btn btn-primary">Store My Training</button>
+                     <button type="submit" class="btn btn-primary">Store My Training</button>
 
                      </div>
 
