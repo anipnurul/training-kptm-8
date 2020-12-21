@@ -10,7 +10,8 @@ class TrainingController extends Controller
     public function index(){
 
         //$trainings = \App\Models\Training::all();
-        $trainings=Training::all();
+        //$trainings=Training::all();
+        $trainings=Training::paginate(1); //by default 15
        // dd($trainings);  //cara debug dump & die
        return view('trainings.index', compact('trainings'));
        //recources/views/trainings/index.blade.php
@@ -61,6 +62,11 @@ class TrainingController extends Controller
         //return to Trainings
         return redirect()->route('training:list');
         
+    }
+
+    public function delete(Training $training){
+        $training->delete();
+        return redirect()->route('training:list');
     }
 
 }
