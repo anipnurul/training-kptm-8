@@ -38,22 +38,22 @@ class TrainingController extends Controller
          //recources/views/trainings/create.blade.php
     }
 
-    public function show($id){
+    public function show(Training $training){
         //find id on table using route
-        $training = Training::find($id);
+       // $training = Training::find($id);  // klu use laravel model binding x perlu find
         //return to view
         return view('trainings.show', compact('training'));
 
     }
 
-    public function edit($id){
-        $training = Training::find($id);
+    public function edit(Training $training){
+       // $training = Training::find($id);
         return view('trainings.edit',compact('training'));
     }
 
-    public function update($id, Request $request){
+    public function update(Training $training, Request $request){
         //find id at table
-        $training = Training::find($id);
+        //$training = Training::find($id);
         
         //update training with edited attributes
         //method 2 - mass assignment
