@@ -38,4 +38,12 @@ class TrainingController extends Controller
          //recources/views/trainings/create.blade.php
     }
 
+    public function show($id){
+        //find id on table using route
+        $training = Training::find($id);
+        //return to view
+        return view('trainings.show', compact('training'));
+
+    }
+
 }

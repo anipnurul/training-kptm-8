@@ -19,6 +19,7 @@
                  <th> Creator </th>
                  <th> Created </th>
                  <th> Created DateTime </th>
+                 <th> Actions </th>
                  </tr>
                  </thead>
                  
@@ -34,6 +35,9 @@
                    </td>
                    <td>{{ $training->Created ? $traininig->created->diffForHumans(): 'Undefined'}}</td>
                    <td>{{ $training->Created ?? '-'}}</td>
+                   <td>
+                   <a href="{{route('trainings:show',$training)}}" class="btn btn-primary"> View </a>
+                   </td>
                 </tr>
                     @endforeach
                 </tbody>
