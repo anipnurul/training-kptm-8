@@ -29,4 +29,7 @@ Route::get('/products/create',[App\Http\Controllers\ProductController::class, 'c
 Route::post('/products/create',[App\Http\Controllers\ProductController::class, 'store']);
 Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class, 'show'])->name('trainings:show');
 
+Route::get('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class, 'edit'])->name('trainings:edit');
+Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class, 'update'])->name('trainings:update');
+
 

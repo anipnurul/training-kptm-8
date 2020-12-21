@@ -9,6 +9,8 @@ class Training extends Model
 {
     use HasFactory;
 
+    protected $fillable =['title','description','trainer'];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
