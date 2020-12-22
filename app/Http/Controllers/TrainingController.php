@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;  //pegang semua request dpd form
 use App\Models\Training;
+use File;
+use Storage;
+use App\Http\Requests\StoreTrainingRequest;
 
 class TrainingController extends Controller
 {
@@ -29,7 +32,14 @@ class TrainingController extends Controller
          //recources/views/trainings/create.blade.php
     }
     //
-    public function store(Request $request){
+    public function store(StoreTrainingRequest $request){
+        
+        // $validated = $request->validate([
+        //     'title' => 'required|min:2',
+        //     'description' => 'required|min:2',
+        //     'attachment' => 'required|mimes:pdf',
+        // ]);
+    
         //dd($request->all());
         //store all data from form to training table
         $training=new Training();
@@ -38,6 +48,12 @@ class TrainingController extends Controller
         $training->trainer=$request->trainer;
         $training->user_id =auth()->user()->id;
         $training->save();
+
+        if($request->hasFile('attachment')){
+           $filename=$training->id.'-'. date("Y-m-d").'.'.$request->attachment->getClientOriginalExtension();
+           Storage::disk('public')->put($filename, File::get($request->attachment));
+           $training->update(['attachment'=>$filename]);
+        }
 
         //return redirect()->back();
         return redirect()
@@ -85,7 +101,12 @@ class TrainingController extends Controller
     }
 
     public function delete(Training $training){
+        if($training->attachment != null){
+            Storage::disk('public')->delete($training->attachment);
+        }
+
         $training->delete();
+
         return redirect()
         ->route('training:list')
         ->with (

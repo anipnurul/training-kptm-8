@@ -24,7 +24,11 @@
                      <label>Trainer</label>
                      <input type="text" name="trainer" class="form-control" required value="{{ $training->trainer}}" readonly>
                      </div>
-
+                     
+                     <!-- @if($training->attachment) -->
+                     <!--<a href="{{ asset('storage/'.$training->attachment) }}" target="_blank"> Open Attachment </a>-->
+                     <a href="{{ $training->attachment_url }}" target="_blank"> Open Attachment </a>
+                     <!-- @endif -->
                      
                 </div>
             </div>
