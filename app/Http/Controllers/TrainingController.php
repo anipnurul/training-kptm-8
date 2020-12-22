@@ -11,7 +11,13 @@ class TrainingController extends Controller
 
         //$trainings = \App\Models\Training::all();
         //$trainings=Training::all();
-        $trainings=Training::paginate(1); //by default 15
+
+        //get current auth user
+        $user = auth()->user();
+        //get user training using relationship with pagination
+        $trainings=$user->trainings()->paginate(5);
+
+        //$trainings=Training::paginate(1); //by default 15
        // dd($trainings);  //cara debug dump & die
        return view('trainings.index', compact('trainings'));
        //recources/views/trainings/index.blade.php
@@ -33,7 +39,12 @@ class TrainingController extends Controller
         $training->user_id =auth()->user()->id;
         $training->save();
 
-        return redirect()->back();
+        //return redirect()->back();
+        return redirect()
+        ->route('training:list')
+        ->with (
+            ['alert-type' => 'alert-primary',
+            'alert'=>'Your training saved']);
         //return to index
         //return view('trainings.store');
          //recources/views/trainings/create.blade.php
@@ -48,8 +59,13 @@ class TrainingController extends Controller
     }
 
     public function edit(Training $training){
-       // $training = Training::find($id);
+        // $training = Training::find($id);
         return view('trainings.edit',compact('training'));
+        // return redirect()
+        // ->route('training:list')
+        // ->with (
+        //     ['alert-type' => 'alert-success',
+        //     'alert'=>'Your training updated']);
     }
 
     public function update(Training $training, Request $request){
@@ -60,13 +76,21 @@ class TrainingController extends Controller
         //method 2 - mass assignment
         $training->update($request->only('title','description','trainer'));
         //return to Trainings
-        return redirect()->route('training:list');
+        return redirect()
+        ->route('training:list')
+        ->with (
+            ['alert-type' => 'alert-success',
+            'alert'=>'Your training updated']);
         
     }
 
     public function delete(Training $training){
         $training->delete();
-        return redirect()->route('training:list');
+        return redirect()
+        ->route('training:list')
+        ->with (
+        ['alert-type' => 'alert-danger',
+        'alert'=>'Your training deleted']);
     }
 
 }
