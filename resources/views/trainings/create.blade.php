@@ -30,7 +30,7 @@
                      <div class="form-group">
                      <label>Description</label>
                      <textarea name="description" class="form-control" class="@error('description') is-invalid @enderror"> {{ old('description') }}</textarea>
-                     @error('title')
+                     @error('description')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                      </div>

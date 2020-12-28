@@ -10,8 +10,18 @@ use App\Http\Requests\StoreTrainingRequest;
 
 class TrainingController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+       
+        if($request->keyword){
+            $search = $request->keyword;
+            
+            $trainings=auth()->user()->trainings()->where('title','LIKE','%'.$search.'%')
+            //$trainings = Training::where('title','LIKE','%'.$search.'%')
+            ->orWhere ('description','LIKE','%'.$search.'%')
+            ->orderBy ('created_at','desc')
+            ->paginate(4);
 
+        }else{
         //$trainings = \App\Models\Training::all();
         //$trainings=Training::all();
 
@@ -19,12 +29,12 @@ class TrainingController extends Controller
         $user = auth()->user();
         //get user training using relationship with pagination
         $trainings=$user->trainings()->paginate(5);
-
+        }
         //$trainings=Training::paginate(1); //by default 15
        // dd($trainings);  //cara debug dump & die
        return view('trainings.index', compact('trainings'));
        //recources/views/trainings/index.blade.php
-
+       // }
     }
     
     public function create(){
