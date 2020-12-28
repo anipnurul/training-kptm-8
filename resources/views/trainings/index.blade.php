@@ -54,13 +54,19 @@
                    <td>{{ $training->Created ? $traininig->created->diffForHumans(): 'Undefined'}}</td>
                    <td>{{ $training->Created ?? '-'}}</td>
                    <td>
-                   <a href="{{route('trainings:show',$training)}}" class="btn btn-primary"> View </a>
+                   @can('view',$training)
+                   <a href="{{route('trainings:show', $training)}}" class="btn btn-primary"> View </a>
+                   @endcan
                    </td>
                    <td>
+                   @can('update',$training)
                    <a href="{{route('trainings:edit',$training)}}" class="btn btn-success"> Edit </a>
+                   @endcan
                    </td>
                    <td>
+                   @can('delete',$training)
                    <a onclick="return confirm('Are you sure?')" href="{{route('trainings:delete',$training)}}" class="btn btn-danger"> Delete </a>
+                   @endcan
                    </td>
                 </tr>
                     @endforeach

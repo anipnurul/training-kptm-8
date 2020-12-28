@@ -8,6 +8,8 @@ use File;
 use Storage;
 use App\Http\Requests\StoreTrainingRequest;
 use Mail;
+use Notification;
+use App\Notifications\DeleteTrainingNotification;
 
 class TrainingController extends Controller
 {
@@ -27,9 +29,12 @@ class TrainingController extends Controller
         //$trainings=Training::all();
 
         //get current auth user
-        $user = auth()->user();
+        //$user = auth()->user();
         //get user training using relationship with pagination
-        $trainings=$user->trainings()->paginate(5);
+        //$trainings=$user->trainings()->paginate(5);
+
+        $trainings=Training::paginate(5); //by default 15
+
         }
         //$trainings=Training::paginate(1); //by default 15
        // dd($trainings);  //cara debug dump & die
@@ -97,11 +102,15 @@ class TrainingController extends Controller
         //find id on table using route
        // $training = Training::find($id);  // klu use laravel model binding x perlu find
         //return to view
+        $this->authorize('view',$training);
+        
         return view('trainings.show', compact('training'));
 
     }
 
     public function edit(Training $training){
+
+        $this->authorize('update',$training);
         // $training = Training::find($id);
         return view('trainings.edit',compact('training'));
         // return redirect()
@@ -128,6 +137,12 @@ class TrainingController extends Controller
     }
 
     public function delete(Training $training){
+        
+        $this->authorize('delete',$training);
+
+        $user=auth()->user();
+        Notification::send($user, new DeleteTrainingNotification());
+
         if($training->attachment != null){
             Storage::disk('public')->delete($training->attachment);
         }
