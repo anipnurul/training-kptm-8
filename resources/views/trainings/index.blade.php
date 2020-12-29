@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-18">
 
         @if (session()->has('alert'))
            <div class="alert {{session()->get('alert-type')}}">
@@ -66,6 +66,8 @@
                    <td>
                    @can('delete',$training)
                    <a onclick="return confirm('Are you sure?')" href="{{route('trainings:delete',$training)}}" class="btn btn-danger"> Delete </a>
+                   <p>
+                   <a onclick="return confirm('Are you sure?')" href="{{route('trainings:forceDelete',$training)}}" class="btn btn-danger"> Force Delete </a>
                    @endcan
                    </td>
                 </tr>
