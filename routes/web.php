@@ -36,3 +36,5 @@ Route::get('/trainings/{training}/delete',[App\Http\Controllers\TrainingControll
 Route::get('/trainings/{training}/force-delete',[App\Http\Controllers\TrainingController::class, 'forceDelete'])->name('trainings:forceDelete');
 
 Route::get('/admin/audits',[App\Http\Controllers\AuditController::class, 'audit'])->middleware('auth','admin');
+
+Route::get('/language/{locale}',[App\Http\Controllers\LocalizationController::class, 'changeLocale']);
